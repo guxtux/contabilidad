@@ -1,0 +1,40 @@
+{%  extends 'base/base.html' %}
+
+{% block content %}
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <td>#</td>
+        <td>Año</td>
+        <td>Quincena</td>
+        <td>Fecha Pago</td>
+        <td>Monto</td>
+        <td>Comentario</td>
+        <td>Acciones</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% if recibos %}
+    {% for recibo in recibos %}
+    <tr>
+        <td>{{ recibo.id }}</td>
+        <td>{{ recibo.year }}</td>
+        <td>{{ recibo.quincena }}</td>
+        <td>{{ recibo.fecha_pago }}</td>
+        <td>{{ recibo.neto }}</td>
+        <td>{{ recibo.comentario }}</td>
+        <td>
+            <a class="btn btn-primary" href="{% url 'recibos:recibo_editar' recibo.id %}">Editar</a>
+            <a class="btn btn-danger"  href="{% url 'recibos:recibo_eliminar' recibo.id %}">Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+
+    {% else %}
+    <h1>No hay registros en recibos</h1>
+    {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}
