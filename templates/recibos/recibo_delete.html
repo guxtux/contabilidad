@@ -8,7 +8,8 @@ App Recibos UNAM
 {% block content %}
     <form method="POST">
         {% csrf_token %}
-        <h3>¿Desea eliminar el registro de Año: {{ recibos.year}} - Quincena: {{ recibos.quincena }}</h3>
+{#        <h3>¿Desea eliminar el registro de Año: {{ recibos.year}} - Quincena: {{ recibos.quincena }}</h3>#}
+        <h3>¿Desea eliminar el registro de Año: {{ object.year}} - Quincena: {{ object.quincena }}</h3>
         <button class="btn btn-danger" type="submit">Sí, eliminar</button>
         <a class="btn btn-default" href="{%  url 'recibos:recibo_listar' %}">Cancelar</a>
     </form>

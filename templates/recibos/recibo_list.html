@@ -15,8 +15,13 @@
     </tr>
     </thead>
     <tbody>
+    {% comment %}Para las vistas basadas en funciones
     {% if recibos %}
-    {% for recibo in recibos %}
+    {% for recibo in recibos %}{% endcomment %}
+
+{#    Para la vista basada en clases #}
+    {% if object_list %}
+    {% for recibo in object_list %}
     <tr>
         <td>{{ recibo.id }}</td>
         <td>{{ recibo.year }}</td>
@@ -32,7 +37,7 @@
     {% endfor %}
 
     {% else %}
-    <h1>No hay registros en recibos</h1>
+        <h1>No hay registros en recibos</h1>
     {% endif %}
     </tbody>
 </table>

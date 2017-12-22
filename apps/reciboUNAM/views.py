@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+#from django.http import HttpResponse
 from apps.reciboUNAM.forms import ReciboForm
 from apps.reciboUNAM.models import Recibo
+
+# Para las vistas basadas en clases
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -47,3 +51,31 @@ def recibo_delete(request, id_recibo):
         recibo.delete()
         return redirect('recibos:recibo_listar')
     return render(request, 'recibos/recibo_delete.html', {'recibos': recibo})
+
+# Vistas basadas en clases:
+
+class ReciboList(ListView):
+    model = Recibo
+    template_name = 'recibos/recibo_list.html'
+
+
+class ReciboCreate(CreateView):
+    model = Recibo
+    form_class = ReciboForm
+    template_name = 'recibos/recibo_form.html'
+    success_url = reverse_lazy('recibos:recibo_listar')
+
+
+class ReciboUpdate(UpdateView):
+    model = Recibo
+    form_class = ReciboForm
+    template_name = 'recibos/recibo_form.html'
+    success_url = reverse_lazy('recibos:recibo_listar')
+
+
+class ReciboDelete(DeleteView):
+    model = Recibo
+    template_name = 'recibos/recibo_delete.html'
+    success_url = reverse_lazy('recibos:recibo_listar')
+
+
