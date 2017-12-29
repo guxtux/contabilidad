@@ -24,4 +24,5 @@ urlpatterns = [
     path('factura/', include('apps.factura.urls')),
     path('usuario/', include('apps.usuario.urls')),
     path('login/', login, {'template_name': 'usuario/index.html'}, name='login'),
+
 ]

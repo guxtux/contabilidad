@@ -1,45 +1,63 @@
 {%  extends 'base/base.html' %}
 
 {% block content %}
+    <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>Año</td>
+                <td>Quincena</td>
+                <td>Fecha Pago</td>
+                <td>Monto</td>
+                <td>Comentario</td>
+                <td>Acciones</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% comment %}Para las vistas basadas en funciones
+            {% if recibos %}
+            {% for recibo in recibos %}{% endcomment %}
 
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <td>#</td>
-        <td>Año</td>
-        <td>Quincena</td>
-        <td>Fecha Pago</td>
-        <td>Monto</td>
-        <td>Comentario</td>
-        <td>Acciones</td>
-    </tr>
-    </thead>
-    <tbody>
-    {% comment %}Para las vistas basadas en funciones
-    {% if recibos %}
-    {% for recibo in recibos %}{% endcomment %}
+        {#    Para la vista basada en clases #}
+            {% if object_list %}
+            {% for recibo in object_list %}
+            <tr>
+                <td>{{ recibo.id }}</td>
+                <td>{{ recibo.year }}</td>
+                <td>{{ recibo.quincena }}</td>
+                <td>{{ recibo.fecha_pago }}</td>
+                <td>{{ recibo.neto }}</td>
+                <td>{{ recibo.comentario }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{% url 'recibos:recibo_editar' recibo.id %}">Editar</a>
+                    <a class="btn btn-danger"  href="{% url 'recibos:recibo_eliminar' recibo.id %}">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
 
-{#    Para la vista basada en clases #}
-    {% if object_list %}
-    {% for recibo in object_list %}
-    <tr>
-        <td>{{ recibo.id }}</td>
-        <td>{{ recibo.year }}</td>
-        <td>{{ recibo.quincena }}</td>
-        <td>{{ recibo.fecha_pago }}</td>
-        <td>{{ recibo.neto }}</td>
-        <td>{{ recibo.comentario }}</td>
-        <td>
-            <a class="btn btn-primary" href="{% url 'recibos:recibo_editar' recibo.id %}">Editar</a>
-            <a class="btn btn-danger"  href="{% url 'recibos:recibo_eliminar' recibo.id %}">Eliminar</a>
-        </td>
-    </tr>
-    {% endfor %}
+            {% else %}
+                <h1>No hay registros en recibos</h1>
+            {% endif %}
+            </tbody>
+        </table>
 
-    {% else %}
-        <h1>No hay registros en recibos</h1>
-    {% endif %}
-    </tbody>
-</table>
+        <div class="pagination justify-content-center">
+                    <span class="step-links">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <a class="page-link" href="?page=1">&laquo; Primero</a>
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previo</a>
+                            {% endif %}
 
+                            <span class="current">
+                                &nbsp; &nbsp; Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }} &nbsp; &nbsp;
+                            </span>
+
+                            {% if page_obj.has_next %}
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Ultimo &raquo;</a>
+                            {% endif %}
+                        </ul>
+                    </span>
+        </div>
 {% endblock %}

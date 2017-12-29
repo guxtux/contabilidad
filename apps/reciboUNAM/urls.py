@@ -22,4 +22,12 @@ urlpatterns = [
 
     #path('eliminar/<id_recibo>/', apps.reciboUNAM.views.recibo_delete, name='recibo_eliminar'),
     path('eliminar/<pk>/', apps.reciboUNAM.views.ReciboDelete.as_view(), name='recibo_eliminar'),
+
+    path('listado/', apps.reciboUNAM.views.listado, name='listado'),
+
+    path('api/', apps.reciboUNAM.views.ReciboAPI.as_view(), name='api'),
+
+    path('reciboyear/', apps.reciboUNAM.views.ReciboYear.as_view(), name='recibosyear'),
+
+
 ]
