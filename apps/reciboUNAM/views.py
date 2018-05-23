@@ -109,31 +109,32 @@ class ReciboAPI(APIView):
     serializer = ReciboSerializer
 
     def get(self, request, format=None):
-        lista = Recibo.objects.all()
+        lista = Recibo.objects.all( )
         response = self.serializer(lista, many=True)
 
         return HttpResponse(json.dumps(response.data), content_type='application/json')
 
 
 class ReciboYear(ListView):
-   model = Recibo
-   template_name = 'recibos/recibo_year.html'
-   paginate_by = 10
+    model = Recibo
+    template_name = 'recibos/recibo_year.html'
+    paginate_by = 10
 
-   # Modifying the get_context_data method
+#    # Modifying the get_context_data method
+#
+   # def get(self, request, *args, **kwargs):
+   #     year = request.GET['year']
+   #     entrayear = Recibo.objects.get(year=year)
+   #     recibosyear = Recibo.objects.all()
+#        data = serializers.serialize('json', recibosyear)
+#        return HttpResponse(data, content_type='application/json')
 
-   def get_queryset(self):
-       queryset = Recibo.objects.all()
-       if self.request.GET.get("year"):
-           selection = self.request.GET.get("year")
-           if selection == "2017":
-               queryset = Recibo.objects.filter(year=2017)
-           elif selection == "2016":
-               queryset = Recibo.objects.filter(year=2016)
-           elif selection == "2015":
-               queryset = Recibo.objects.filter(year=2015)
-           elif selection == "2014":
-               queryset = Recibo.objects.filter(year=2014)
-           else:
-               queryset = Recibo.objects.all()
-       return queryset
+def ListaReciboYear(request):
+    year = request.GET.get('year')
+    recibos = Recibo.objects.filter(year=year)
+    recibos = [recibo_serializer(recibo) for recibo in recibos]
+    return HttpResponse(json.dumps(recibos), content_type='application/json')
+
+
+def recibo_serializer(recibo):
+    return{'year': recibo.year, 'quincena': recibo.quincena}

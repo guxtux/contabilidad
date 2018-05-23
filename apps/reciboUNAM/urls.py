@@ -29,5 +29,7 @@ urlpatterns = [
 
     path('reciboyear/', apps.reciboUNAM.views.ReciboYear.as_view(), name='recibosyear'),
 
+    path('recibobusca/', apps.reciboUNAM.views.ListaReciboYear, name='listarecibosyear'),
+
 
 ]
